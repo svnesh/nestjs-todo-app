@@ -22,7 +22,7 @@ export class Todo {
     @Column({ type:'text', nullable:true})
     description: string
 
-    @ManyToOne(() => User, (user:User) => user.id, { eager: true, nullable: false })
+    @ManyToOne(() => User, (user:User) => user.id, { eager: true })
     @JoinColumn({ name:'createdBy' })
     createdBy: User
 

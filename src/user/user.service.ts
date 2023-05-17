@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { Constants } from 'src/utils/constants';
+import * as bcrypt from 'bcrypt';
 
 
 @Injectable()
@@ -19,7 +20,14 @@ export class UserService {
     user.firstName = createUserDto.firstName;
     user.lastName = createUserDto.lastName;
     user.email = createUserDto.email;
-    user.password = createUserDto.password;
+
+    //hash password
+    const saltRounds = 10;
+    const password = createUserDto.password;
+    const salt = bcrypt.genSaltSync(saltRounds); 
+    const hash = bcrypt.hashSync(password, salt);
+
+    user.password = hash;
     user.role = Constants.ROLES.NORMAL_ROLE;
     return this.userRepository.save(user);
   }
