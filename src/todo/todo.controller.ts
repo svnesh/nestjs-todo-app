@@ -14,11 +14,18 @@ export class TodoController {
     return this.todoService.create(createTodoDto);
   }
 
-  @Get('user/:id')
+  @Get()
   @UseGuards(AuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
-  findByUserId(@Param('id') id: string) {
-    return this.todoService.findByUserId(+id);
+  findAllNotCompleted() {
+    return this.todoService.findAllNotCompleted();
+  }
+
+  @Get('/completed')
+  @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  findAllCompleted() {
+    return this.todoService.findAllCompleted();
   }
 
   @Get(':id')

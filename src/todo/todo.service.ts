@@ -24,9 +24,23 @@ export class TodoService {
     return this.todoRepository.save(todo);
   }
 
-  findByUserId(id: number) {
+  findAllNotCompleted() {
+    let userId = this.requestService.getUser().id;
     return this.todoRepository.find({
-      where: { createdBy: { id: id }},
+      where: { 
+        createdBy: { id: userId },
+        completed: false
+      },
+    })    
+  }
+
+  findAllCompleted() {
+    let userId = this.requestService.getUser().id;
+    return this.todoRepository.find({
+      where: { 
+        createdBy: { id: userId },
+        completed: true
+      },
     })    
   }
 
@@ -43,7 +57,7 @@ export class TodoService {
         title: updateTodoDto.title,
         description: updateTodoDto.description,
         completed: updateTodoDto.completed,
-        updatedAt: new Date().toLocaleString()
+        updatedAt: new Date().toISOString().slice(0, 19).replace('T', ' ')
       })
   }
 

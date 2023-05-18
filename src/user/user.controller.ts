@@ -16,16 +16,20 @@ export class UserController {
 
   @Get()
   @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
   findAll() {
     return this.userService.findAll();
   }
 
   @Get(':email')
+  @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
   findUserByEmail(@Param('email') email: string){
     return this.userService.findUserByEmail(email);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }

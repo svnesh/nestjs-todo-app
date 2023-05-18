@@ -16,7 +16,7 @@ export class Todo {
     @Column({ type:'boolean', default:false })
     completed: boolean
 
-    @Column({ type:'timestamp', default: null })
+    @Column({ type:'timestamp', nullable:true, select: false})
     updatedAt: Date
 
     @Column({ type:'text', nullable:true})
